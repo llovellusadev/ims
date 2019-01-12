@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const accountSid = 'AC62b31df86197e01ca49efd95f419827d';
-const authToken = 'b414a4dd80b48fb6d0bc302b66d6a116';
+const accountSid = '';
+const authToken = '';
 const client = require('twilio')(accountSid, authToken);
 
 router.get('/text', function (req, res) {
