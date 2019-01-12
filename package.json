@@ -1,0 +1,22 @@
+{
+  "name": "ims",
+  "version": "0.1.0",
+  "description": "ims test challenge",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/llovellusadev/ims.git"
+  },
+  "keywords": [
+    "ims"
+  ],
+  "author": "Llewellyn Lovell",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/llovellusadev/ims/issues"
+  },
+  "homepage": "https://github.com/llovellusadev/ims#readme"
+}
