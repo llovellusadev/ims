@@ -1,5 +1,6 @@
 const express = require('express');
 const next = require('next');
+const sendRouter = require('./routers/send');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -9,11 +10,7 @@ app.prepare()
 .then(() => {
   const server = express();
 
-  server.get('/p/:id', (req, res) => {
-    const actualPage = '/post';
-    const queryParams = { title: req.params.id };
-    app.render(req, res, actualPage, queryParams);
-  })
+  server.use('/send', sendRouter);
 
   server.get('*', (req, res) => {
     return handle(req, res);
