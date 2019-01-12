@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const accountSid = '';
-const authToken = '';
-const client = require('twilio')(accountSid, authToken);
+//const accountSid = '';
+//const authToken = '';
+//const client = require('twilio')(accountSid, authToken);
 
 router.get('/text', function (req, res) {
   /*client.messages
