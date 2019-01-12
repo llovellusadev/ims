@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next",
+    "dev": "node express.js",
     "build": "next build",
-    "start": "npm run build -s && next start -p 8081"
+    "start": "npm run build -s && NODE_ENV=production node express.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/llovellusadev/ims#readme",
   "dependencies": {
+    "express": "^4.16.4",
     "next": "^7.0.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
