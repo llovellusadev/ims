@@ -1,5 +1,5 @@
 export default () => (
   <div>
-    <h1>IMS</h1>
+    <h1>IMS Managed Services</h1>
   </div>
 )
