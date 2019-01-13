@@ -5,13 +5,13 @@ class Header extends React.Component {
     if (isMobile) {
       return (
         <header style={headerStyle}>
-          <div>IMS Managed Services mobile</div>
+          <div style={mobileDivStyle}>IMS Managed Services</div>
         </header>
       );
     } else {
       return (
         <header style={headerStyle}>
-          <div>IMS Managed Services</div>
+          <div style={desktopDivStyle}>IMS Managed Services</div>
         </header>
       );
     }
@@ -23,6 +23,13 @@ const headerStyle = {
   margin: '0px',
   padding: '15px',
   fontFamily: 'Quicksand',
+};
+
+const mobileDivStyle = {
+  fontSize: '10em'
+};
+
+const desktopDivStyle = {
   fontSize: '2em'
 };
 
