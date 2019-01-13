@@ -13,7 +13,7 @@ const headerStyle = {
   margin: '0px',
   padding: '15px',
   fontFamily: 'Quicksand',
-  fontSize: '25px'
+  fontSize: '2em'
 };
 
 export default Header;
