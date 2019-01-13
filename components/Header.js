@@ -4,7 +4,7 @@ class Header extends React.Component {
   render() {
     return (
       <header style={headerStyle}>
-        <MediaQuery maxDeviceWidth={1224}>
+        <MediaQuery  orientation="portrait">
           {(matches) => {
             if (matches) {
               return <div style={mobileStyle}>IMS Managed Services</div>;
