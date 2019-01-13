@@ -3,29 +3,14 @@
   margin: 0px;
   padding: 15px;
   font-family: Quicksand, Serif;
-  font-size: 40px;
+  font-size: 20px;
 };
 
-@media (min-width: 600px) {
-  .header {
-    font-size: 35px;
-  }
-}
-
 @media (min-width: 800px) {
-  .header {
-    font-size: 30px;
-  }
 }
 
 @media (min-width: 1000px) {
-  .header {
-    font-size: 25px;
-  }
 }
 
 @media (min-width: 1200px) {
-  .header {
-    font-size: 20px;
-  }
 }
