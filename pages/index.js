@@ -3,7 +3,9 @@ import Header from '../components/Header';
 class Index extends React.Component {
   render() {
     return (
-      <Header />
+      <div>
+        <Header />
+      </div>
     );
   }
 }

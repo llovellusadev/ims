@@ -26,7 +26,6 @@
     "express": "^4.16.4",
     "next": "^7.0.2",
     "react": "^16.7.0",
-    "react-device-detect": "^1.6.1",
     "react-dom": "^16.7.0",
     "twilio": "^3.27.1"
   }

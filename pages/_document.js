@@ -13,7 +13,8 @@ export default class MyDocument extends Document {
       <html>
         <Head>
           <style>{`body { margin: 0 } /* custom! */`}</style>
-          <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet"></link>
+          <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet" />
+          <link href="public/css/index.css" rel="stylesheet" />
         </Head>
         <body className="custom_class">
           {this.props.customValue}
