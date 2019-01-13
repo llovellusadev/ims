@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express');
 const next = require('next');
 const sendRouter = require('./routers/send');
@@ -10,8 +9,6 @@ const handle = app.getRequestHandler();
 app.prepare()
 .then(() => {
   const server = express();
-
-  server.use('/public', express.static(path.join(__dirname, 'public')));
 
   server.use('/send', sendRouter);
 
