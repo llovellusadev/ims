@@ -6,10 +6,10 @@ class Index extends React.Component {
     return (
       <div>
         <Header />
-        <Form placeholder="Message body" title="Send Email" />
-        <Form placeholder="Message body" title="Send Text" />
-        <Form placeholder="Message body" title="Send Crestron Message" />
-        <Form placeholder="Message body" title="Send Crestron Log" />
+        <Form placeholder="Recipient" title="Send Email" />
+        <Form placeholder="Phone number" title="Send Text" />
+        <Form placeholder="Hostname" title="Message Crestron" />
+        <Form placeholder="Hostname" title="Send Crestron Log" />
       </div>
     );
   }
