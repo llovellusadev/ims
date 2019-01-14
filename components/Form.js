@@ -11,7 +11,9 @@ const Form = (props) => {
       <style jsx>{`
         .formContainer {
           display: flex;
-        }          
+          flex-flow: row wrap;
+          justify-content: center;
+        }
       `}</style>
     </div>
   )
