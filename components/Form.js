@@ -48,11 +48,19 @@ class Form extends React.Component {
             font-family: Quicksand, Serif;
           }
           .input:focus {
-            outline: none !important;
             border: 2px solid #796eff;
           }
           input {
             outline: none !important;
+            -webkit-appearance: none;
+            text-transform: none;
+            text-decoration: none;
+          }
+          input[type=submit] {
+            border: 2px solid #796eff;
+          }
+          input[type=submit]:hover {
+            border: 2px solid #483D8B;
           }
           ::placeholder {
             color: #bbb;
@@ -67,6 +75,7 @@ class Form extends React.Component {
           .button {
             display:inline-block;
             width: 200px;
+            height: 50px;
             text-align: center;
             padding: 15px;
             margin: 5px;
@@ -76,7 +85,6 @@ class Form extends React.Component {
             cursor: pointer;
             font-size: 15px;
             font-family: Quicksand, Serif;
-            text-decoration: none;
           }          
           .button:hover {
             background-color: #483D8B;
