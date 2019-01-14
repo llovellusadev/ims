@@ -52,6 +52,11 @@ class TextArea extends React.Component {
           ::-ms-input-placeholder {
             color: #bbb;
           }
+          @media (max-width: 418px) {
+            textarea {
+              width: 165px;
+            }
+          }
         `}</style>
       </div>
     )
