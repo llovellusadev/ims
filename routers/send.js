@@ -13,8 +13,8 @@ router.post('/text', function (req, res) {
       from: '+16123247886',
       to: validator.escape(req.body.number)
     })
-    .then(message => console.log(message.sid))
-    .done(res.send('message sent'));
+    .then(res.send('message sent'))
+    .catch(() => res.status(500).send('Server error'));
   } else {
     res.status(400).send('Bad request')
   }
