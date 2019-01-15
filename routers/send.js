@@ -9,7 +9,10 @@ router.post('/text', function (req, res) {
   const escapedNumber = validator.escape(req.body.number);
   const escapedMessage = validator.escape(req.body.message);
 
-  if (validator.isMobilePhone()) {
+  console.log(escapedNumber);
+  console.log(escapedMessage);
+
+  if (validator.isMobilePhone(escapedNumber)) {
     client.messages
       .create({
         body: escapedMessage,
@@ -17,7 +20,10 @@ router.post('/text', function (req, res) {
         to: escapedNumber
       })
       .then(res.send('message sent'))
-      .catch(() => res.status(500).send('Server error'));
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send('Server error');
+      });
   } else {
     res.status(400).send('Bad request')
   }
