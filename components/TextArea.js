@@ -11,6 +11,7 @@ class TextArea extends React.Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+    this.props.handleTextChange(event.target.value);
   }
 
   render() {
