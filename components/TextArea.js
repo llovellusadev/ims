@@ -15,8 +15,8 @@ class TextArea extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <textarea autoFocus placeholder="Message" value={this.state.value} onChange={this.handleChange} />
+      <div className='container'>
+        <textarea autoFocus placeholder='Message' value={this.state.value} onChange={this.handleChange} />
         <style jsx>{`
           .container {
             display: flex;

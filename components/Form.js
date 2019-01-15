@@ -12,7 +12,7 @@ class Form extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.props.title);
+    this.props.handleFormSubmit(this.state.value);
   }
 
   handleChange(event) {
@@ -25,8 +25,8 @@ class Form extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <div className='formContainer'>
-          <input type="text" className="input" placeholder={this.props.placeholder} value={this.state.value} onChange={this.handleChange} />
-          <input type="submit" className="button" value={this.props.title} />
+          <input type='text' className='input' placeholder={this.props.placeholder} value={this.state.value} onChange={this.handleChange} />
+          <input type='submit' className='button' value={this.props.title} />
         </div>
         <style jsx>{`
           .formContainer {
