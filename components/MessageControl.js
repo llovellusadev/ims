@@ -3,6 +3,7 @@ import validator from 'validator';
 import Form from './Form';
 import TextArea from './TextArea';
 import Error from './Error';
+import Notification from './Notification';
 
 class MessageControl extends React.Component {
   constructor(props) {
@@ -10,12 +11,16 @@ class MessageControl extends React.Component {
 
     this.state = {
       message: '',
+      notification: '',
       error: ''
     };
 
+    this.notificationTimeout = null;
     this.errorTimeout = null;
 
     this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.showNotification = this.showNotification.bind(this);
+    this.hideNotification = this.hideNotification.bind(this);
     this.showError = this.showError.bind(this);
     this.hideError = this.hideError.bind(this);
     this.handleEmailSubmit = this.handleEmailSubmit.bind(this);
@@ -28,6 +33,20 @@ class MessageControl extends React.Component {
     this.setState({ message: validator.escape(data) })
   }
 
+  showNotification(notification) {
+    this.setState({ notification: notification });
+
+    clearTimeout(this.notificationTimeout);
+
+    this.notificationTimeout = setTimeout(() => {
+      this.hideNotification();
+    }, 2000)
+  }
+
+  hideNotification() {
+    this.setState({ notification: '' });
+  }
+
   showError(err) {
     this.setState({ error: err });
 
@@ -38,7 +57,7 @@ class MessageControl extends React.Component {
     }, 2000)
   }
 
-  hideError(err) {
+  hideError() {
     this.setState({ error: '' });
   }
 
@@ -51,8 +70,8 @@ class MessageControl extends React.Component {
           message: this.state.message
         })
         .then(function (response) {
-          console.log(response);
-        })
+          this.showNotification('Message sent');
+        }.bind(this))
         .catch(function (error) {
           this.showError('Message failed');
         }.bind(this));
@@ -77,8 +96,8 @@ class MessageControl extends React.Component {
           message: this.state.message
         })
         .then(function (response) {
-          console.log(response);
-        })
+          this.showNotification('Message sent');
+        }.bind(this))
         .catch(function (error) {
           this.showError('Message failed');
         }.bind(this));
@@ -100,8 +119,8 @@ class MessageControl extends React.Component {
           message: this.state.message
         })
         .then(function (response) {
-          console.log(response);
-        })
+          this.showNotification('Message sent');
+        }.bind(this))
         .catch(function (error) {
           this.showError('Message failed');
         }.bind(this));
@@ -123,8 +142,8 @@ class MessageControl extends React.Component {
           message: this.state.message
         })
         .then(function (response) {
-          console.log(response);
-        })
+          this.showNotification('Message sent');
+        }.bind(this))
         .catch(function (error) {
           this.showError('Message failed');
         }.bind(this));
@@ -145,6 +164,7 @@ class MessageControl extends React.Component {
         <Form placeholder='Phone number' title='Send Text' handleFormSubmit={this.handleTextSubmit} />
         <Form placeholder='Hostname' title='Message Crestron' handleFormSubmit={this.handleMessageSubmit} />
         <Form placeholder='Hostname' title='Send Crestron Log' handleFormSubmit={this.handleLogSubmit} />
+        <Notification notification={this.state.notification} />
         <Error error={this.state.error} />
       </div>
     )
