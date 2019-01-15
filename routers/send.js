@@ -1,20 +1,23 @@
 const validator = require('validator');
 const express = require('express');
-const router = express.Router();
 const accountSid = process.env.ACCOUNT_SID || 'AC62b31df86197a01ca49efd95f449827e';
 const authToken = process.env.AUTH_TOKEN || 'bd3bf16489e351bcb88023f30285976s';
 const client = require('twilio')(accountSid, authToken);
+const router = express.Router();
 
 router.post('/text', function (req, res) {
-  if (validator.isMobilePhone(validator.escape(req.body.number))) {
+  const escapedNumber = validator.escape(req.body.number);
+  const escapedMessage = validator.escape(req.body.message);
+
+  if (validator.isMobilePhone()) {
     client.messages
-    .create({
-      body: validator.escape(req.body.message),
-      from: '+16123247886',
-      to: validator.escape(req.body.number)
-    })
-    .then(res.send('message sent'))
-    .catch(() => res.status(500).send('Server error'));
+      .create({
+        body: escapedMessage,
+        from: '+16123247886',
+        to: escapedNumber
+      })
+      .then(res.send('message sent'))
+      .catch(() => res.status(500).send('Server error'));
   } else {
     res.status(400).send('Bad request')
   }

@@ -26,9 +26,10 @@ class MessageControl extends React.Component {
 
   handleEmailSubmit(data) {
     if (this.state.message.length > 0) {
-      if (validator.isEmail(validator.escape(data))) {
+      const escapedData = validator.escape(data);
+      if (validator.isEmail(escapedData)) {
         axios.post('/send/email', {
-          email: data,
+          email: escapedData,
           message: this.state.message
         })
         .then(function (response) {
@@ -48,12 +49,13 @@ class MessageControl extends React.Component {
 
   handleTextSubmit(data) {
     if (this.state.message.length > 0) {
-      if (validator.isMobilePhone(validator.escape(data))) {
-        if (data.length === 10) {
-          data = `+1${data}`;
+      let escapedData = validator.escape(data);
+      if (validator.isMobilePhone(escapedData)) {
+        if (escapedData.length === 10) {
+          escapedData = `+1${escapedData}`;
         }
         axios.post('/send/text', {
-          number: data,
+          number: escapedData,
           message: this.state.message
         })
         .then(function (response) {
@@ -73,9 +75,10 @@ class MessageControl extends React.Component {
 
   handleMessageSubmit(data) {
     if (this.state.message.length > 0) {
-      if (validator.isURL(validator.escape(data))) {
+      const escapedData = validator.escape(data);
+      if (validator.isURL(escapedData)) {
         axios.post('/send/message', {
-          domain: data,
+          domain: escapedData,
           message: this.state.message
         })
         .then(function (response) {
@@ -95,9 +98,10 @@ class MessageControl extends React.Component {
 
   handleLogSubmit(data) {
     if (this.state.message.length > 0) {
-      if (validator.isURL(validator.escape(data))) {
+      const escapedData = validator.escape(data);
+      if (validator.isURL(escapedData)) {
         axios.post('/send/log', {
-          domain: data,
+          domain: escapedData,
           message: this.state.message
         })
         .then(function (response) {
