@@ -1,31 +1,36 @@
 var express = require('express');
 var router = express.Router();
-//const accountSid = '';
-//const authToken = '';
-//const client = require('twilio')(accountSid, authToken);
+const accountSid = process.env.ACCOUNT_SID || 'AC62b31df86197a01ca49efd95f449827e';
+const authToken = process.env.AUTH_TOKEN || 'bd3bf16489e351bcb88023f30285976s';
+const client = require('twilio')(accountSid, authToken);
 
-router.get('/text', function (req, res) {
-  /*client.messages
+router.post('/text', function (req, res) {
+  client.messages
     .create({
-      body: 'From Llewellyn Lovell',
-      from: '',
-      to: ''
+      body: req.body.message,
+      from: '+16123247886',
+      to: req.body.number
     })
     .then(message => console.log(message.sid))
-    .done(res.send('email sent'));*/
-    res.send('text');
+    .done(res.send('message sent'));
 })
 
-router.get('/email', function (req, res) {
-  res.send('email');
+router.post('/email', function (req, res) {
+  console.log(req.body.message);
+  console.log(req.body.email);
+  res.send('message sent');
 })
 
-router.get('/message', function (req, res) {
-  res.send('message');
+router.post('/message', function (req, res) {
+  console.log(req.body.message);
+  console.log(req.body.domain);
+  res.send('message sent');
 })
 
-router.get('/log', function (req, res) {
-  res.send('log');
+router.post('/log', function (req, res) {
+  console.log(req.body.message);
+  console.log(req.body.domain);
+  res.send('message sent');
 })
 
 module.exports = router;

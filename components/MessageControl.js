@@ -1,3 +1,4 @@
+import axios from 'axios';
 import validator from 'validator';
 import Form from './Form';
 import TextArea from './TextArea';
@@ -26,7 +27,16 @@ class MessageControl extends React.Component {
   handleEmailSubmit(data) {
     if (this.state.message.length > 0) {
       if (validator.isEmail(validator.escape(data))) {
-        console.log('emailing');
+        axios.post('/send/email', {
+          email: data,
+          message: this.state.message
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         this.setState({ error: '' })
       } else {
         this.setState({ error: 'Incorrectly formatted email' })
@@ -42,10 +52,19 @@ class MessageControl extends React.Component {
         if (data.length === 10) {
           data = `+1${data}`;
         }
-        console.log('texting', data);
+        axios.post('/send/text', {
+          number: data,
+          message: this.state.message
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         this.setState({ error: '' })
       } else {
-        this.setState({ error: 'Incorrectly formatted phone' })
+        this.setState({ error: 'Incorrectly formatted phone number' })
       }
     } else {
       this.setState({ error: 'Need a message to send' })
@@ -55,7 +74,16 @@ class MessageControl extends React.Component {
   handleMessageSubmit(data) {
     if (this.state.message.length > 0) {
       if (validator.isURL(validator.escape(data))) {
-        console.log('messaging');
+        axios.post('/send/message', {
+          domain: data,
+          message: this.state.message
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         this.setState({ error: '' })
       } else {
         this.setState({ error: 'Incorrectly formatted domain' })
@@ -68,7 +96,16 @@ class MessageControl extends React.Component {
   handleLogSubmit(data) {
     if (this.state.message.length > 0) {
       if (validator.isURL(validator.escape(data))) {
-        console.log('logging');
+        axios.post('/send/log', {
+          domain: data,
+          message: this.state.message
+        })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         this.setState({ error: '' })
       } else {
         this.setState({ error: 'Incorrectly formatted domain' })
