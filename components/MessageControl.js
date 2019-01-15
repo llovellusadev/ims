@@ -13,7 +13,11 @@ class MessageControl extends React.Component {
       error: ''
     };
 
+    this.errorTimeout = null;
+
     this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.showError = this.showError.bind(this);
+    this.hideError = this.hideError.bind(this);
     this.handleEmailSubmit = this.handleEmailSubmit.bind(this);
     this.handleTextSubmit = this.handleTextSubmit.bind(this);
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
@@ -22,6 +26,20 @@ class MessageControl extends React.Component {
 
   handleMessageChange(data) {
     this.setState({ message: validator.escape(data) })
+  }
+
+  showError(err) {
+    this.setState({ error: err });
+
+    clearTimeout(this.errorTimeout);
+
+    this.errorTimeout = setTimeout(() => {
+      this.hideError();
+    }, 2000)
+  }
+
+  hideError(err) {
+    this.setState({ error: '' });
   }
 
   handleEmailSubmit(data) {
@@ -36,14 +54,14 @@ class MessageControl extends React.Component {
           console.log(response);
         })
         .catch(function (error) {
-          console.log(error);
-        });
-        this.setState({ error: '' })
+          this.showError('Message failed');
+        }.bind(this));
+        this.hideError();
       } else {
-        this.setState({ error: 'Incorrectly formatted email' })
+        this.showError('Incorrectly formatted email');
       }
     } else {
-      this.setState({ error: 'Need a message to send' })
+      this.showError('Need a message to send');
     }
   }
 
@@ -62,14 +80,14 @@ class MessageControl extends React.Component {
           console.log(response);
         })
         .catch(function (error) {
-          console.log(error);
-        });
-        this.setState({ error: '' })
+          this.showError('Message failed');
+        }.bind(this));
+        this.hideError();
       } else {
-        this.setState({ error: 'Incorrectly formatted phone number' })
+        this.showError('Incorrectly formatted phone number');
       }
     } else {
-      this.setState({ error: 'Need a message to send' })
+      this.showError('Need a message to send');
     }
   }
 
@@ -85,14 +103,14 @@ class MessageControl extends React.Component {
           console.log(response);
         })
         .catch(function (error) {
-          console.log(error);
-        });
-        this.setState({ error: '' })
+          this.showError('Message failed');
+        }.bind(this));
+        this.hideError();
       } else {
-        this.setState({ error: 'Incorrectly formatted domain' })
+        this.showError('Incorrectly formatted domain');
       }
     } else {
-      this.setState({ error: 'Need a message to send' })
+      this.showError('Need a message to send');
     }
   }
 
@@ -108,14 +126,14 @@ class MessageControl extends React.Component {
           console.log(response);
         })
         .catch(function (error) {
-          console.log(error);
-        });
-        this.setState({ error: '' })
+          this.showError('Message failed');
+        }.bind(this));
+        this.hideError();
       } else {
-        this.setState({ error: 'Incorrectly formatted domain' })
+        this.showError('Incorrectly formatted domain');
       }
     } else {
-      this.setState({ error: 'Need a message to send' })
+      this.showError('Need a message to send');
     }
   }
 

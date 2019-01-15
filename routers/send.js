@@ -21,7 +21,10 @@ router.post('/text', function (req, res) {
         from: '+16123247886',
         to: escapedNumber
       })
-      .then(res.send('message sent'))
+      .then((data) => {
+        console.log(data);
+        res.send('message sent');
+      })
       .catch((err) => {
         console.log(err);
         res.status(500).send('Server error');
