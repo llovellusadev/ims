@@ -1,6 +1,8 @@
 const validator = require('validator');
 const express = require('express');
 const aws = require('aws-sdk');
+const Promise = require("bluebird");
+const net = require('net');
 
 const accountSid = process.env.ACCOUNT_SID || 'AC62b31df86197a01ca49efd95f449827e';
 const authToken = process.env.AUTH_TOKEN || 'bd3bf16489e351bcb88023f30285976s';
@@ -9,6 +11,34 @@ const client = require('twilio')(accountSid, authToken);
 aws.config.update({region: 'us-east-1'});
 const ses = new aws.SES();
 const router = express.Router();
+
+function messageCrestron(domain, port, data) {
+  return new Promise(function (resolve, reject) {
+    const client = new net.Socket();
+
+    client.connect(port, domain, function() {
+      client.write(data);
+    });
+
+    client.on('data', function() {
+      client.destroy();
+    });
+
+    client.on('error', function() {
+      client.destroy();
+      reject();
+    });
+
+    client.on('close', function() {
+      resolve();
+    });
+
+    setTimeout(() => {
+      client.destroy();
+      reject();
+    }, 2000);
+  });
+}
 
 router.post('/text', function (req, res) {
   const escapedNumber = validator.escape(req.body.number);
@@ -23,7 +53,7 @@ router.post('/text', function (req, res) {
       })
       .then((data) => {
         console.log(data);
-        res.send('message sent');
+        res.send('Message sent');
       })
       .catch((err) => {
         console.log(err);
@@ -70,21 +100,35 @@ router.post('/email', function (req, res) {
       console.log(err.message);
       res.status(500).send('Server error');
     } else {
-      res.send('message sent');
+      res.send('Message sent');
     }
   });
 })
 
 router.post('/message', function (req, res) {
-  console.log(req.body.message);
-  console.log(req.body.domain);
-  res.send('message sent');
+  const escapedMessage = validator.escape(req.body.message);
+  const escapedDomain = validator.escape(req.body.domain);
+
+  messageCrestron(escapedDomain, 8124, escapedMessage)
+    .then(() => {
+      res.send('Message sent');
+    })
+    .catch((e) => {
+      res.status(500).send('Server error');
+    });
 })
 
 router.post('/log', function (req, res) {
-  console.log(req.body.message);
-  console.log(req.body.domain);
-  res.send('message sent');
+  const escapedMessage = validator.escape(req.body.message);
+  const escapedDomain = validator.escape(req.body.domain);
+
+  messageCrestron(escapedDomain, 8125, escapedMessage)
+    .then(() => {
+      res.send('Message sent');
+    })
+    .catch((e) => {
+      res.status(500).send('Server error');
+    });
 })
 
 module.exports = router;
