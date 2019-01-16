@@ -12,7 +12,11 @@ class MessageControl extends React.Component {
     this.state = {
       message: '',
       notification: '',
-      error: ''
+      error: '',
+      emailFormBusy: false,
+      textFormBusy: false,
+      messageFormBusy: false,
+      logFormBusy: false
     };
 
     this.notificationTimeout = null;
@@ -23,6 +27,10 @@ class MessageControl extends React.Component {
     this.hideNotification = this.hideNotification.bind(this);
     this.showError = this.showError.bind(this);
     this.hideError = this.hideError.bind(this);
+    this.emailFormBusy = this.emailFormBusy.bind(this);
+    this.textFormBusy = this.textFormBusy.bind(this);
+    this.messageFormBusy = this.messageFormBusy.bind(this);
+    this.logFormBusy = this.logFormBusy.bind(this);
     this.handleEmailSubmit = this.handleEmailSubmit.bind(this);
     this.handleTextSubmit = this.handleTextSubmit.bind(this);
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
@@ -61,21 +69,39 @@ class MessageControl extends React.Component {
     this.setState({ error: '' });
   }
 
+  emailFormBusy(busy) {
+    this.setState({ emailFormBusy: busy });
+  }
+
+  textFormBusy(busy) {
+    this.setState({ textFormBusy: busy });
+  }
+
+  messageFormBusy(busy) {
+    this.setState({ messageFormBusy: busy });
+  }
+
+  logFormBusy(busy) {
+    this.setState({ logFormBusy: busy });
+  }
+
   handleEmailSubmit(data) {
     if (this.state.message.length > 0) {
       const escapedData = validator.escape(data);
       if (validator.isEmail(escapedData)) {
+        this.emailFormBusy(true);
         axios.post('/send/email', {
           email: escapedData,
           message: this.state.message
         })
         .then(function (response) {
           this.showNotification('Message sent');
+          this.emailFormBusy(false);
         }.bind(this))
         .catch(function (error) {
           this.showError('Message failed');
+          this.emailFormBusy(false);
         }.bind(this));
-        this.hideError();
       } else {
         this.showError('Incorrectly formatted email');
       }
@@ -91,17 +117,19 @@ class MessageControl extends React.Component {
         if (escapedData.length === 10) {
           escapedData = `+1${escapedData}`;
         }
+        this.textFormBusy(true);
         axios.post('/send/text', {
           number: escapedData,
           message: this.state.message
         })
         .then(function (response) {
           this.showNotification('Message sent');
+          this.textFormBusy(false);
         }.bind(this))
         .catch(function (error) {
           this.showError('Message failed');
+          this.textFormBusy(false);
         }.bind(this));
-        this.hideError();
       } else {
         this.showError('Incorrectly formatted phone number');
       }
@@ -114,17 +142,19 @@ class MessageControl extends React.Component {
     if (this.state.message.length > 0) {
       const escapedData = validator.escape(data);
       if (validator.isURL(escapedData)) {
+        this.messageFormBusy(true);
         axios.post('/send/message', {
           domain: escapedData,
           message: this.state.message
         })
         .then(function (response) {
           this.showNotification('Message sent');
+          this.messageFormBusy(false);
         }.bind(this))
         .catch(function (error) {
           this.showError('Message failed');
+          this.messageFormBusy(false);
         }.bind(this));
-        this.hideError();
       } else {
         this.showError('Incorrectly formatted domain');
       }
@@ -137,17 +167,19 @@ class MessageControl extends React.Component {
     if (this.state.message.length > 0) {
       const escapedData = validator.escape(data);
       if (validator.isURL(escapedData)) {
+        this.logFormBusy(true);
         axios.post('/send/log', {
           domain: escapedData,
           message: this.state.message
         })
         .then(function (response) {
           this.showNotification('Message sent');
+          this.logFormBusy(false);
         }.bind(this))
         .catch(function (error) {
           this.showError('Message failed');
+          this.logFormBusy(false);
         }.bind(this));
-        this.hideError();
       } else {
         this.showError('Incorrectly formatted domain');
       }
@@ -160,10 +192,10 @@ class MessageControl extends React.Component {
     return (
       <div>
         <TextArea handleTextChange={this.handleMessageChange} />
-        <Form placeholder='Recipient' title='Send Email' handleFormSubmit={this.handleEmailSubmit} />
-        <Form placeholder='Phone number' title='Send Text' handleFormSubmit={this.handleTextSubmit} />
-        <Form placeholder='Hostname' title='Message Crestron' handleFormSubmit={this.handleMessageSubmit} />
-        <Form placeholder='Hostname' title='Send Crestron Log' handleFormSubmit={this.handleLogSubmit} />
+        <Form placeholder='Recipient' title='Send Email' handleFormSubmit={this.handleEmailSubmit} busy={this.state.emailFormBusy} />
+        <Form placeholder='Phone number' title='Send Text' handleFormSubmit={this.handleTextSubmit} busy={this.state.textFormBusy} />
+        <Form placeholder='Hostname' title='Message Crestron' handleFormSubmit={this.handleMessageSubmit} busy={this.state.messageFormBusy} />
+        <Form placeholder='Hostname' title='Send Crestron Log' handleFormSubmit={this.handleLogSubmit} busy={this.state.logFormBusy} />
         <Notification notification={this.state.notification} />
         <Error error={this.state.error} />
       </div>
